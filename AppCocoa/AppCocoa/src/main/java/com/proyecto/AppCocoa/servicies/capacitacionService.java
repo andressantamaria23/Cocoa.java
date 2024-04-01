@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface capacitacionService {
 
-    public List<capacitacion> findAll() throws Exception;
-    public capacitacion findById(int id);
+     List<capacitacion> findAll() throws Exception;
+         capacitacion findById(Long id);
     public void create(capacitacion capacitacion);
 
     public void update(capacitacion capacitacion);

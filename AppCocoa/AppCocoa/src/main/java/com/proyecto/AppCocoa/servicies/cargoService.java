@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface cargoService {
 
-      List<cargo> findAll() throws Exception;
+     public List<cargo> findAll() throws Exception;
 
-   cargo findById(Long id);
+   public cargo findById(Long id);
     public void create(cargo cargo);
 
     public void update(cargo cargo);

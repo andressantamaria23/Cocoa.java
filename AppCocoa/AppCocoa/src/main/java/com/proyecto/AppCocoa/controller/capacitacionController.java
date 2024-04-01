@@ -1,24 +1,26 @@
 package com.proyecto.AppCocoa.controller;
 
-import com.proyecto.AppCocoa.entities.campesino;
-import com.proyecto.AppCocoa.servicies.imp.campesinoimp;
+
+import com.proyecto.AppCocoa.entities.capacitacion;
+import com.proyecto.AppCocoa.servicies.imp.capacitacionimp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @RestController
-@RequestMapping(path = "/api/campesino/",method = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT,RequestMethod.HEAD})
+@RequestMapping(path = "/api/capacitacion/",method = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT,RequestMethod.HEAD})
 @CrossOrigin("*")
-public class campesinoController {
+public class capacitacionController {
 
     @Autowired
-    private campesinoimp campesinoimp;
+    private capacitacionimp capacitacionimp;
 
     @PostMapping("create")
     public ResponseEntity<Map<String, Object>> create(@RequestBody Map<String, Object> request) {
@@ -27,13 +29,13 @@ public class campesinoController {
 
         try {
             System.out.print("@@@@@@@" + request);
-            campesino campesino = new campesino();
+            capacitacion capacitacion = new capacitacion();
 
             //campesino.setId(Long.parseLong( request.get("id").toString()));
-            campesino.setDireccion(request.get("direccion").toString());
-            campesino.setName(request.get("name").toString());
-            campesino.setTel(Long.parseLong(request.get("tel").toString()));
-            this.campesinoimp.create(campesino);
+            capacitacion.setHora(LocalTime.parse(request.get("hora").toString()));
+            capacitacion.setFecha(Date.valueOf(request.get("fecha").toString()));
+            capacitacion.setTipo(request.get("tipo").toString());
+            this.capacitacionimp.create(capacitacion);
 
 
             response.put("status", "succes");
@@ -56,9 +58,9 @@ public class campesinoController {
 
         try {
 
-            List<campesino> campesinoList = this.campesinoimp.findAll();
+            List<capacitacion> capacitacionList = this.capacitacionimp.findAll();
             response.put("status", "succes");
-            response.put("data", campesinoList);
+            response.put("data", capacitacionList);
 
 
         } catch (Exception e) {
@@ -67,5 +69,6 @@ public class campesinoController {
             return new ResponseEntity<>(response, HttpStatus.BAD_GATEWAY);
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
+
     }
 }
