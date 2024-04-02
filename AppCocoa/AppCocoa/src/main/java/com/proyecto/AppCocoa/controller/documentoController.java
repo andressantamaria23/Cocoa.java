@@ -1,25 +1,23 @@
 package com.proyecto.AppCocoa.controller;
 
-import com.proyecto.AppCocoa.entities.campesino;
-import com.proyecto.AppCocoa.entities.contrato;
-import com.proyecto.AppCocoa.servicies.imp.contratoimp;
+import com.proyecto.AppCocoa.entities.documento;
+import com.proyecto.AppCocoa.servicies.imp.documentoimp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(path = "/api/contrato/",method = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT,RequestMethod.HEAD})
+@RequestMapping(path = "/api/documento/",method = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT,RequestMethod.HEAD})
 @CrossOrigin("*")
-public class contratoController {
+public class documentoController {
 
-@Autowired
-    private contratoimp contratoimp;
+    @Autowired
+    private documentoimp documentoimp;
 
     @PostMapping("create")
     public ResponseEntity<Map<String, Object>> create(@RequestBody Map<String, Object> request) {
@@ -28,12 +26,14 @@ public class contratoController {
 
         try {
             System.out.print("@@@@@@@" + request);
-            contrato contrato = new contrato();
+            documento documento = new documento();
 
-            //contrato.setId(Long.parseLong( request.get("id").toString()));
-            contrato.setStartdate(Date.valueOf(request.get("fechaincio").toString()));
-            contrato.setEndate(Date.valueOf(request.get("fechafin").toString()));
-            this.contratoimp.create(contrato);
+            //documento.setId(Long.parseLong( request.get("id").toString()));
+            documento.setText(request.get("archivo").toString());
+            documento.setType(request.get("tipo").toString());
+            documento.setVersion(Long.parseLong(request.get("version").toString()));
+            this.documentoimp.create(documento);
+
 
             response.put("status", "succes");
             response.put("data", "Registro extiso");
@@ -47,7 +47,6 @@ public class contratoController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
     @GetMapping("all")
 
     public ResponseEntity<Map<String, Object>> findAll() {
@@ -55,9 +54,9 @@ public class contratoController {
 
         try {
 
-            List<contrato> contratoList = this.contratoimp.findAll();
+            List<documento> documentoList = this.documentoimp.findAll();
             response.put("status", "succes");
-            response.put("data", contratoimp);
+            response.put("data",documentoList );
 
 
         } catch (Exception e) {
@@ -69,5 +68,4 @@ public class contratoController {
     }
 
 
-    }
-
+}

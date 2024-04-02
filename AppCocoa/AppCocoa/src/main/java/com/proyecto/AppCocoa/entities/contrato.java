@@ -19,10 +19,10 @@ public class contrato {
     @Column(name="id_contrato",unique = true)
     private long id;
 
-    @Column(name="fecha_inicio")
+    @Column(name="fecha_inicio",nullable = false)
     private Date startdate;
 
-    @Column(name="fecha_fin")
+    @Column(name="fecha_fin",nullable = false)
     private Date endate;
 
     @ManyToOne
